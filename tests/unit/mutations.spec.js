@@ -7,8 +7,8 @@ describe('Store Mutations', () => {
         checkNodeStatusSuccess, 
         checkNodeStatusFailure,
         setBlockInitStatus,
-        setBlockStatusFailure,
-        setBlocksStatusSuccess
+        setBlockSuccessStatus,
+        setBlockFailureStatus
     } = mutations; 
 
     const initState = initialState();
@@ -36,21 +36,14 @@ describe('Store Mutations', () => {
         expect(initState.nodes.list[0].online).toEqual(false);
     });
 
-    it('Check block init state', () => {
+    it('check block init status', () => {
         const id = 1;
 
         setBlockInitStatus(initState, id);
-        expect(initState.blocks[id].loading).toEqual(true);        
+        expect(initState.blocks[id].loading).toBe(true);
     });
     
-    it('Check block failure state', () => {
-        const id = 1;
-
-        setBlockStatusFailure(initState, id);
-        expect(initState.blocks[id].loading).toEqual(false);        
-    });
-    
-    it('Check block success state', () => {
+    it('check block success state', () => {
         const id = 1;
         const params = {
             id,
@@ -58,20 +51,27 @@ describe('Store Mutations', () => {
                 {
                     id: 1,
                     attributes: {
-                        data: 'By reason of these things',
-                    },
+                        data: 'Testing 1'
+                    }
                 },
                 {
                     id: 2,
                     attributes: {
-                        data: 'then the whaling voyage was welcome'
+                        data: 'Testing 2'
                     }
                 },
             ]
         };
 
-        setBlocksStatusSuccess(initState, params);
-        expect(initState.blocks[id].loading).toBe(false);        
-        expect(initState.blocks[id].list.length).toBe(params.data.length);        
+        setBlockSuccessStatus(initState, params);
+        expect(initState.blocks[id].loading).toBe(false);
+        expect(initState.blocks[id].list.length).toEqual(params.data.length);
+    });
+
+    it('check block failure status', () => {
+        const id = 1;
+
+        setBlockFailureStatus(initState, id);
+        expect(initState.blocks[id].loading).toBe(false);
     });
 });

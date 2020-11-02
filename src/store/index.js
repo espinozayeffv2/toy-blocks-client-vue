@@ -11,9 +11,11 @@ export default new Vuex.Store({
         ...initialState()
     },
     getters: {
-        getNodes : (state) => state.nodes.list,
+        getNodes : state => {
+            return state.nodes.list;
+        },
         getBlocks: (state) => (id) => state.blocks[id]
     },
     mutations,
-    actions
+    actions,
 })

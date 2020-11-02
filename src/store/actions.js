@@ -10,7 +10,6 @@ export const actions = {
                     el,
                     name: response.node_name
                 };
-
                 await commit('checkNodeStatusSuccess', params);
             }
             catch (e) {
@@ -18,20 +17,21 @@ export const actions = {
             }
         }
     },
-    async getBlocksFromNode({ commit }, { id, url }){
+    // eslint-disable-next-line no-unused-vars
+    async getBlockFromNode({ commit }, { id, url })
+    {
         commit('setBlockInitStatus', id);
-
         try {
             const response = await fetch(`${url}/api/v1/blocks`);
-            const { data } = await response.json();
+            const { data } = await response.json(); 
             const params = {
                 id,
                 data
             };
-            commit('setBlocksStatusSuccess', params);
-        } catch (e){
-            console.error(e);
-            commit('setBlockStatusFailure', id);
+
+            commit('setBlockSuccessStatus', params);
+        } catch (error) {
+            commit('setBlockFailureStatus', id);
         }
     }
 }

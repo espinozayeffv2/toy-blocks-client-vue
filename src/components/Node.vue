@@ -19,13 +19,11 @@
       </div>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-        <p v-if="!nodeIsOnline" class="accordion-block-error-text">
-            Cannont retrieve the blocks for this node is this moment. Try again later.
+        <p v-if="!nodeIsOnline" class="accordion-block-error">
+            Cannont retrieve the blocks from this node at this moment. Try again later.
         </p>
-        <v-progress-linear v-else-if="blocks.loading" indeterminate class="pa-2" />
-        <template v-else>
-            <block v-for="(item, i) in blocks.list" :key="i" :block="item" />
-        </template>
+        <v-progress-linear v-if="blocks.loading" indeterminate class="pa-2" />
+        <block v-for="(item, i) in blocks.list" :key="i" :block="item" />
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
@@ -51,14 +49,14 @@ export default {
     }),
     computed: {
         ...mapGetters(['getBlocks']),
-        blocks() {
-            return this.getBlocks(this.node.id)
+        blocks(){
+            return this.getBlocks(this.node.id);
         },
         nodeIsOnline(){
             return this.node.online
         },
         getColor() {
-            return this.nodeIsOnline ? "#18cc55" : '#Eb5757';
+            return this.nodeIsOnline ? '#18cc55' : '#Eb5757';
         },
         getStatusText() {
             if (this.node.loading) return 'Loading';
@@ -70,16 +68,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getBlocksFromNode']),
-        onHeaderClick() {
+        ...mapActions(['getBlockFromNode']),
+        onHeaderClick(){
             if (this.blocksAreNotEmpty || !this.nodeIsOnline) return 
-            const params = {
-                id: this.node.id,
-                url: this.node.url
-            }
-            this.getBlocksFromNode(params)
+
+            this.getBlockFromNode(this.node)
         }
-    },
+    }
 }
 </script>
 
@@ -114,12 +109,11 @@ export default {
     color: #263238;
   }
 
-  .accordion-block-error-text {
-    margin: 0;
-    color: #263238;
-    font-size: 14px;
-    letter-spacing: 0.25px;
-  }
+  .accordion-block-error{
+        color: #263238;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+    }
 </style>
 
 <style>

@@ -62,12 +62,9 @@ export const mutations = {
         }
     },
     setBlockInitStatus(state, id){
-        state.blocks[id].loading = true
+        state.blocks[id].loading = true;
     },
-    setBlockStatusFailure(state, id){
-        state.blocks[id].loading = false
-    },
-    setBlocksStatusSuccess(state, { id, data }){
+    setBlockSuccessStatus(state, { id, data }){
         const list = data.map(x => ({
             id: x.id,
             text: x.attributes.data
@@ -77,5 +74,8 @@ export const mutations = {
             loading: false,
             list
         }
-    }
+    },
+    setBlockFailureStatus(state, id){
+        state.blocks[id].loading = false;
+    },
 }

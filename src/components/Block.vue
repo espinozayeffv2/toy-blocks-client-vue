@@ -1,7 +1,8 @@
 <template>
     <div class="block-container my-2 pa-2">
-        <p class="w-100 block-title" loading v-text="formattedId" />
+        <p class="w-100 block-title" v-text="formattedId" />
         <p class="w-100 block-content" v-text="block.text" />
+
     </div>
 </template>
 
@@ -10,16 +11,15 @@ export default {
     name: 'Block',
     props: {
         block: {
-            id: String,
-            text: String,
-            loading: Boolean
+            id: String, 
+            text: String
         }
     },
     computed: {
         formattedId() {
-            return this.block.id.padStart(3, '0');
+            return this.block.id.padStart(3, '0'); 
         }
-    }
+    },
 }
 </script>
 
@@ -28,15 +28,16 @@ export default {
     background: rgba(0, 0, 0, 0.12);
     border-radius: 2px;
 
-    p{
+    p {
         margin: 0;
     }
 
     .block-title{
         margin-bottom: 5px;
         color: #304FFE;
-        font-size: 10px;
+        font-style: normal;
         font-weight: bold;
+        font-size: 10px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
     }
