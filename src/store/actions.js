@@ -10,6 +10,7 @@ export const actions = {
                     el,
                     name: response.node_name
                 };
+
                 await commit('checkNodeStatusSuccess', params);
             }
             catch (e) {
@@ -17,7 +18,6 @@ export const actions = {
             }
         }
     },
-    // eslint-disable-next-line no-unused-vars
     async getBlocksFromNode({ commit }, { id, url }){
         commit('setBlockInitStatus', id);
 
@@ -30,6 +30,7 @@ export const actions = {
             };
             commit('setBlocksStatusSuccess', params);
         } catch (e){
+            console.error(e);
             commit('setBlockStatusFailure', id);
         }
     }

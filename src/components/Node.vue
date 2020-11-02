@@ -72,7 +72,7 @@ export default {
     methods: {
         ...mapActions(['getBlocksFromNode']),
         onHeaderClick() {
-            if (!this.blocksAreNotEmpty && !this.nodeIsOnline) return 
+            if (this.blocksAreNotEmpty || !this.nodeIsOnline) return 
             const params = {
                 id: this.node.id,
                 url: this.node.url

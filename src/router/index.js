@@ -5,15 +5,15 @@ import Nodes from '../views/Nodes.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Nodes',
-    component: Nodes
-  },
+    {
+        path: '/',
+        name: 'Nodes',
+        component: Nodes
+    },
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 export default router
