@@ -1,5 +1,8 @@
 # toy-blocks-client-vue
 
+## Demo
+https://toy-blocks-vue-challange.netlify.app/
+
 ## Project setup
 ```
 npm install
