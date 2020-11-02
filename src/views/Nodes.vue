@@ -5,6 +5,7 @@
       <v-expansion-panels accordion
         v-for="(item,i) in getNodes" :key="i">
           <node :key="i" :node="{
+            id: item.id,
             name: item.name,
             online: item.online,
             url: item.url,
@@ -18,25 +19,25 @@
 
 <script>
 import Node from '../components/Node';
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'Nodes',
-  components: {
-    Node,
-  },
-  data: () => ({
-    data: []
-  }),
-  computed: {
-    ...mapGetters(['getNodes']),
-  },
-  methods: {
-    ...mapActions(['getAllNodes']),
-  },
-  async mounted() {
-    await this.getAllNodes(this.getNodes);
-  },
+    name: 'Nodes',
+    components: {
+        Node,
+    },
+    data: () => ({
+        data: []
+    }),
+    computed: {
+        ...mapGetters(['getNodes']),
+    },
+    methods: {
+        ...mapActions(['getAllNodes']),
+    },
+    async mounted() {
+        await this.getAllNodes(this.getNodes);
+    },
 }
 </script>
 
