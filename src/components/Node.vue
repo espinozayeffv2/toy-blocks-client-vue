@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panel class="accordion-node">
-    <v-expansion-panel-header>
+    <v-expansion-panel-header @click="onHeaderClick">
       <div class="d-flex">
         <div class="d-flex flex-column">
           <span class="accordion-header-name">{{node.name}}</span>
@@ -19,46 +19,62 @@
       </div>
     </v-expansion-panel-header>
     <v-expansion-panel-content>
-      <span>Here goes the content</span>
+        <p v-if="!nodeIsOnline" class="accordion-block-error">
+            Cannont retrieve the blocks from this node at this moment. Try again later.
+        </p>
+        <v-progress-linear v-if="blocks.loading" indeterminate class="pa-2" />
+        <block v-for="(item, i) in blocks.list" :key="i" :block="item" />
     </v-expansion-panel-content>
   </v-expansion-panel>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
-  name: 'node',
-  props: {
-    node: {
-      url: String,
-      online: Boolean,
-      name: String,
-      loading: Boolean,
-    }
-  },
-  data: () => ({
-  }),
-  computed: {
-    getColor() {
-      let badgeColor = '#Eb5757';
-
-      if(this.node.online) {
-        badgeColor = "#18cc55";
-      }
-      return badgeColor;
+    name: 'node',
+    components: {
+        Block: () => import('./Block'),
     },
-    getStatusText() {
-      let statusText = 'Loading';
-
-      if(!this.node.loading) {
-        if(this.node.online) {
-          statusText = 'Online';
-        } else {
-          statusText = 'Offline';
+    props: {
+        node: {
+            id: Number,
+            url: String,
+            online: Boolean,
+            name: String,
+            loading: Boolean,
         }
-      }
-      return statusText;
+    },
+    data: () => ({
+    }),
+    computed: {
+        ...mapGetters(['getBlocks']),
+        blocks(){
+            return this.getBlocks(this.node.id);
+        },
+        nodeIsOnline(){
+            return this.node.online
+        },
+        getColor() {
+            return this.nodeIsOnline ? '#18cc55' : '#Eb5757';
+        },
+        getStatusText() {
+            if (this.node.loading) return 'Loading';
+
+            return this.nodeIsOnline ? 'Online' : 'Offline';
+        },
+        blocksAreNotEmpty(){
+            return !!this.blocks.list.length
+        }
+    },
+    methods: {
+        ...mapActions(['getBlockFromNode']),
+        onHeaderClick(){
+            if (this.blocksAreNotEmpty || !this.nodeIsOnline) return 
+
+            this.getBlockFromNode(this.node)
+        }
     }
-  }
 }
 </script>
 
@@ -92,6 +108,12 @@ export default {
     letter-spacing: 1.5px;
     color: #263238;
   }
+
+  .accordion-block-error{
+        color: #263238;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+    }
 </style>
 
 <style>

@@ -7,14 +7,15 @@ import { actions } from './actions';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
-    ...initialState()
-  },
-  getters: {
-    getNodes : state => {
-      return state.nodes.list;
-    }
-  },
-  mutations: mutations,
-  actions: actions,
+    state: {
+        ...initialState()
+    },
+    getters: {
+        getNodes : state => {
+            return state.nodes.list;
+        },
+        getBlocks: (state) => (id) => state.blocks[id]
+    },
+    mutations,
+    actions,
 })
